@@ -6,6 +6,7 @@ import ProductCard from "./ui/ProductCard";
 const MenShirt = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -23,6 +24,10 @@ const MenShirt = () => {
     fetchProducts();
   }, []);
 
+  const addToCart = (products) => {
+    setCartItems([...cartItems, products]);
+  };
+
   if (loading)
     return (
       <div className="text-center">
@@ -34,10 +39,15 @@ const MenShirt = () => {
   return (
     <Container className="mt-4">
       <h2 className="text-start mb-4">Category Mens Shoes</h2>
-      <Row>
+      <Row className="justify-content-center">
         {products.map((product) => (
-          <Col key={product.id} sm={12} md={6} lg={3} className="mb-4">
-            <ProductCard product={product} />
+          <Col
+            key={product.id}
+            sm={12}
+            md={6}
+            lg={3}
+            className="mb-4 d-flex justify-content-center">
+            <ProductCard product={product} addToCart={addToCart} />
           </Col>
         ))}
       </Row>

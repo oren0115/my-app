@@ -35,7 +35,7 @@ const WomenBags = () => {
             key={product.id}
             sm={12}
             md={6}
-            lg={4}
+            lg={3}
             className="mb-4 d-flex justify-content-center">
             <ProductCard product={product} />
           </Col>

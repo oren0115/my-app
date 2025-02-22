@@ -1,18 +1,24 @@
 import React from "react";
 import { Card, Button, Badge } from "react-bootstrap";
 import { Link } from "react-router-dom";
-
+import "../style.css";
 // slice deskripsi
 function truncateDescription(description, wordLimit = 10) {
   return description.split(" ").slice(0, wordLimit).join(" ") + "...";
 }
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, addToCart }) => {
   return (
     <Card
       style={{ width: "100%", maxWidth: "18rem" }}
       className="shadow-sm d-flex flex-column">
-      <Card.Img variant="top" src={product.thumbnail} alt={product.title} />
+      <Card.Img
+        variant="top"
+        src={product.thumbnail}
+        alt={product.title}
+        className="product-thumbnail"
+      />
+
       <Card.Body className="d-flex flex-column">
         <Card.Title>{product.title}</Card.Title>
         <Card.Text>{truncateDescription(product.description)}</Card.Text>
@@ -35,7 +41,10 @@ const ProductCard = ({ product }) => {
           <Link to={`/product/${product.id}`} className="btn btn-primary w-50">
             Detail
           </Link>
-          <Button variant="outline-primary" className="w-50">
+          <Button
+            variant="outline-primary"
+            onClick={() => addToCart(product)}
+            className="w-50">
             Add to Cart
           </Button>
         </div>

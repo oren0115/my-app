@@ -1,0 +1,7 @@
+.product-thumbnail {
+  transition: transform 0.3s ease-in-out;
+}
+
+.product-thumbnail:hover {
+  transform: scale(1.1); /* Zoom out menjadi 90% dari ukuran aslinya */
+}

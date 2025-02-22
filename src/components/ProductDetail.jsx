@@ -1,7 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { Container, Row, Col, Image, Badge, Button } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Carousel,
+  Badge,
+  Button,
+  Image,
+  Spinner,
+} from "react-bootstrap";
+import "./style.css";
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -21,41 +31,38 @@ const ProductDetail = () => {
         setLoading(false);
       }
     };
-
     fetchProduct();
   }, [id]);
 
   if (loading)
-    return <p className="text-center mt-4">Loading product details...</p>;
+    return (
+      <div className="text-center">
+        <Spinner animation="border" />
+        <p>Loading products...</p>
+      </div>
+    );
   if (!product) return <p className="text-center mt-4">Product not found.</p>;
 
   return (
     <Container className="mt-4">
       <Row>
+        {/* Gambar Produk dengan Carousel */}
         <Col md={5}>
-          <Image
-            src={product.thumbnail}
-            alt={product.title}
-            fluid
-            className="rounded"
-          />
-          {/* Cegah error jika product.images tidak ada */}
-          {product?.images?.length > 0 && (
-            <Row className="mt-3">
-              {product.images.map((img, index) => (
-                <Col key={index} xs={4}>
-                  <Image
-                    src={img}
-                    alt={`Product ${index}`}
-                    fluid
-                    className="rounded"
-                  />
-                </Col>
-              ))}
-            </Row>
-          )}
+          <Carousel interval={2000} fade>
+            {product.images.map((img, index) => (
+              <Carousel.Item key={index}>
+                <Image
+                  src={img}
+                  alt={`Product ${index}`}
+                  fluid
+                  className="rounded"
+                />
+              </Carousel.Item>
+            ))}
+          </Carousel>
         </Col>
 
+        {/* Detail Produk */}
         <Col md={7}>
           <h2>{product.title}</h2>
           <p className="text-muted">{product.description}</p>
@@ -72,9 +79,6 @@ const ProductDetail = () => {
 
           <div className="mt-3">
             <strong>Brand:</strong> {product.brand}
-          </div>
-          <div>
-            <strong>SKU:</strong> {product.sku}
           </div>
           <div>
             <strong>Stock:</strong> {product.stock} available
