@@ -20,7 +20,7 @@ const Login = () => {
       });
 
       localStorage.setItem("token", response.data.token);
-      navigate("/dashboard"); // Redirect ke dashboard setelah login
+      navigate("/dashboard");
     } catch (err) {
       setError("Invalid username or password");
     }
